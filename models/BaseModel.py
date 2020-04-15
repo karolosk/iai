@@ -9,15 +9,25 @@ from sqlalchemy import (
 
 class BaseModel(Base):
 
-    __abstract__ = True
+    __abstract__ = True # declared to not be created by create_all
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), nullable=True)
 
 
-    def before_save(self, *args, **kwargs):
-        pass
+    @classmethod
+    def get_or_create(cls, session, **kwargs):
+        instance = session.query(cls).filter_by(**kwargs).first()
+        if instance:
+            return instance
+        else:
+            instance = cls(**kwargs)
+            session.add(instance)
+            session.commit()
+            return instance
 
-    def after_save(self, *args, **kwargs):
-        pass
+
+    @classmethod
+    def get_by_id(cls, session, id):
+        return session.query(cls).filter(cls.id==id).first()

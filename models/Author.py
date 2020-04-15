@@ -2,13 +2,7 @@ from models.BaseModel import BaseModel
 import datetime
 from sqlalchemy import (
     Column,
-    Integer,
     String,
-    Boolean,
-    ForeignKey,
-    DateTime,
-    Sequence,
-    Float
 )
 
 class Author(BaseModel):
