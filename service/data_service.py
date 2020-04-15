@@ -1,9 +1,7 @@
 import logging
 
 def hello():
-    log = logging.getLogger(__name__)
-    log.info("Hello logging!")
-    print("hello")
+    pass
 
 
 def data_retrieve():
