@@ -6,6 +6,9 @@ from sqlalchemy import (
     DateTime,
 )
 import logging
+from db.database import Database
+
+log = logging.getLogger(__name__)
 
 
 class BaseModel(Base):
@@ -16,7 +19,18 @@ class BaseModel(Base):
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime(timezone=True), nullable=True)
 
-
+    session = Database.session
+    
+    def save(self, commit=True):
+        self.session.add(self)
+        if commit:
+            try:
+                self.session.commit()
+            except Exception as e:
+                self.session.rollback()
+                log.error(str(e))
+        self.session.close()
+        
     @classmethod
     def get_or_create(cls, session, **kwargs):
         instance = session.query(cls).filter_by(**kwargs).first()
@@ -30,8 +44,8 @@ class BaseModel(Base):
 
 
     @classmethod
-    def get_by_id(cls, session, id):
-        return session.query(cls).filter(cls.id==id).first()
+    def get_by_id(cls, id):
+        return cls.session.query(cls).filter(cls.id==id).first()
 
     
     @classmethod
