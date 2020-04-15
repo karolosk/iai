@@ -3,5 +3,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ENDPOINT = os.getenv('DRUGTARGETCOMMONS_ENDPOINT')
-DATABASE = os.getenv('DATABASE_URL')
+BASE_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_BASE_ENDPOINT')
+API_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_API_ENDPOINT')
+DATABASE_URL = os.getenv('DATABASE')
