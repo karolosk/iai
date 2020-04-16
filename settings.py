@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 BASE_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_BASE_ENDPOINT')
 API_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_API_ENDPOINT')

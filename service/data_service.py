@@ -14,23 +14,12 @@ log = logging.getLogger(__name__)
 db = Database()
 
 
-def hello():
-    pass
-
-
-def data_retrieve():
-    pass
-
-
-def store_genes():
-    pass
-
-
-def store_or_retrieve_compounds():
-    pass    
-
-
 def init_db():
+
+    '''
+    Initialiazing Database structure and adds default records to the tables.
+    If the tables and the records exists simply logs it
+    '''
 
     Base.metadata.create_all(db.engine, checkfirst=True)
     create_default_records()
