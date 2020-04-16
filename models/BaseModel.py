@@ -20,7 +20,8 @@ class BaseModel(Base):
     updated_at = Column(DateTime(timezone=True), nullable=True)
 
     session = Database.session
-    
+
+
     def save(self, commit=True):
         self.session.add(self)
         if commit:
@@ -29,38 +30,57 @@ class BaseModel(Base):
             except Exception as e:
                 self.session.rollback()
                 log.error(str(e))
-        self.session.close()
-        
-    @classmethod
-    def get_or_create(cls, session, **kwargs):
-        instance = session.query(cls).filter_by(**kwargs).first()
-        if instance:
-            return instance
-        else:
-            instance = cls(**kwargs)
-            session.add(instance)
-            session.commit()
-            return instance
+            finally:
+                self.session.close()
 
+
+     
+
+    @classmethod
+    def get_or_create(cls, **kwargs):
+        
+        try:
+            instance = cls.session.query(cls).filter_by(**kwargs).first()
+            if instance:
+                return instance
+            else:
+                instance = cls(**kwargs)
+                cls.session.add(instance)
+                cls.session.commit()
+                return instance
+        except Exception as e:
+            log.error('Couid not save: ' + str(cls) + ': ' + str(e))
+            cls.session.rollback()
+        finally:
+            cls.session.close
 
     @classmethod
     def get_by_id(cls, id):
         return cls.session.query(cls).filter(cls.id==id).first()
 
+
+    @classmethod
+    def get_by_attribute(cls, **kwargs):
+        return cls.session.query(cls).filter_by(**kwargs).first()
+
     
     @classmethod
-    def bulk_create(cls, iterable, *args, **kwargs):
-        # Logger Here
-        # cls.before_bulk_create(iterable, *args, **kwargs)
-        model_objs = []
-        for data in iterable:
-            if not isinstance(data, cls):
-                data = cls(**data)
-            model_objs.append(data)
+    def bulk_save(cls, iterable, *args, **kwargs):
 
-        db.session.bulk_save_objects(model_objs)
-        if kwargs.get('commit', True) is True:
-            db.session.commit()
-        # Logger Here
-        cls.after_bulk_create(model_objs, *args, **kwargs)
-        return model_objs
+        log.info('Initializing bulk save for: ' + str(len(iterable)) + ' ' + str(cls)+ ' models.')
+        try:
+            model_objs = []
+            for data in iterable:
+                if not isinstance(data, cls):
+                    data = cls(**data)
+                model_objs.append(data)
+
+            cls.session.bulk_save_objects(model_objs)
+            cls.session.commit()
+            log.info('Bulk save for: ' + str(len(iterable)) + ' ' + str(cls)+ ' models.')
+            return model_objs
+        except Exception as e:
+            log.error('Could not save models: ' + str(e))
+            cls.session.rollback()
+        finally:
+            cls.session.close()

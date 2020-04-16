@@ -1,11 +1,15 @@
 from models.BaseModel import BaseModel
-import datetime
+from datetime import datetime, timezone
 from sqlalchemy import (
     Column,
     Integer,
     String,
     ForeignKey
 )
+from sqlalchemy.orm import relationship
+import logging
+
+log = logging.getLogger(__name__)
 
 class BioActivity(BaseModel):
 
@@ -16,3 +20,29 @@ class BioActivity(BaseModel):
     publication = Column(String(50)) # pubmed_id
     native_id = Column(String(50)) # resource_uri last path param
 
+    authors = relationship('Author', secondary='bioActivity_author')
+
+
+    def exists(self):
+        return self.session.query(BioActivity.id).filter_by(native_id=self.native_id).scalar() is not None
+
+
+    @classmethod
+    def bulk_update(cls, iterable):
+        
+        log.info('Initializing bulk update for: ' + str(len(iterable)) + ' ' + str(cls)+ ' models.')
+        for bioactivity in iterable:
+            try:
+                bioactivity.update_at = datetime.now(timezone.utc)
+                bioactivity_to_update = cls.session.query(cls).filter_by(native_id = bioactivity.native_id).first()
+                bioactivity_to_update = bioactivity
+                cls.session.commit()
+            except Exception as e:
+                log.error('Could not update Bioactivities: ' + str(e))
+                cls.session.rollback()
+            finally:
+                cls.session.close()
+
+
+                    
+     
