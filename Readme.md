@@ -121,7 +121,7 @@ cd iai_data_engineering_assesement
 Optionally you can create a virual environment for the application.
 Assuming that you want to use pipenv for this:
 ```
-pip install --user pipenv
+pip install pipenv
 ```
 
 Then in order to install the dependencies run:
