@@ -21,7 +21,7 @@ def init_db():
     If the tables and the records exists simply logs it
     '''
 
-    Base.metadata.drop_all(db.engine) # Uncomment to drop all tables and recreate them on next run
+    # Base.metadata.drop_all(db.engine) # Uncomment to drop all tables and recreate them on next run
 
     Base.metadata.create_all(db.engine, checkfirst=True)
     create_default_records()

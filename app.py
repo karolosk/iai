@@ -8,6 +8,6 @@ from service.database_service import init_db
 from service.fetch_service import etl
 
 
-# init_db()
+init_db()
 etl()
 
