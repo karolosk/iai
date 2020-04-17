@@ -17,7 +17,7 @@ def etl():
 def fetch_data():
     
     '''
-    Fetching all the data from api in batches of 200 records. (Can be changed from .env file) 
+    Fetching all the data from api in batches of 20 records. (Can be changed from .env file) 
     Implemented as generator in order to push each extracted page to the next
     step without waiting for everything to be in memory to proceed. 
     '''

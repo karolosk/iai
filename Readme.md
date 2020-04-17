@@ -171,4 +171,4 @@ As soon as you are ready with your environment (installed dependencies, .env fil
 ```
 python app.py
 ```
-
+This will start the process and it will run untill it consume the whole API.
