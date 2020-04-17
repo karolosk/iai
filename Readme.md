@@ -161,10 +161,9 @@ DATABASE_URI=postgres://db_user:db_password@db_host:db_port/db_name
 
 * LOG_LEVEL= Describes from which logging level the logs will appear in the console or written in the log file 
 
-* DATABASE_URI = Database uri which will be used for the application. 
-    * In the case you have Postgres already installed change the values with your own (e.g Assuming you have a default Postgres installation, with user admin and password admin, and you have created a database called iai_assesement for the application then this should be set as: postgres://admin:admin@localhost:5432/iai_assesement)
-
-In the case that you do not have access in a Postgres server
+* DATABASE_URI = Database uri which will be used for the application. **(You need to change this)**
+    * Assuming you have Postgres already installed change the values with your own (e.g Assuming you have a default Postgres installation, with user admin and password admin, and you have created a database called iai_assesement for the application then this should be set as: postgres://admin:admin@localhost:5432/iai_assesement)
+        
 
 As soon as you are ready with your environment (installed dependencies, .env file) simply run in your project directory:
 
