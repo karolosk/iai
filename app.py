@@ -4,19 +4,10 @@ import logging
 import pprint
 from datetime import datetime
 import settings
-from service.data_service import init_db
-from service.etl_service import etl
-log = logging.getLogger(__name__)
+from service.database_service import init_db
+from service.fetch_service import etl
 
-init_db()
+
+# init_db()
 etl()
-# pprint.pprint(response.json())
-
-# for item in response.json()['bioactivities'][1:4]:
-
-#     pprint.pprint(item)
-
-
-# print(response.json()['meta']['next'])
-# Base.metadata.drop_all(db.engine)
 

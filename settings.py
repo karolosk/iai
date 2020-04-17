@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-BASE_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_BASE_ENDPOINT')
+BASE_URL = os.getenv('DRUGTARGETCOMMONS_BASE_URL')
 API_ENDPOINT = os.getenv('DRUGTARGETCOMMONS_API_ENDPOINT')
 API_LIMIT = os.getenv('DRUGTARGETCOMMONS_API_LIMIT')
 DATABASE_URI = os.getenv('DATABASE_URI')

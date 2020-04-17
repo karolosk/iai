@@ -11,4 +11,4 @@ class Author(BaseModel):
     __tablename__ = 'author'
 
     name = Column(String(150), unique=True)                                   
-    bioActivity = relationship('BioActivity', secondary='bioActivity_author')
+    publication = relationship('Publication', secondary='publication_author')

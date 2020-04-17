@@ -17,10 +17,8 @@ class BioActivity(BaseModel):
     compound_id = Column(Integer, ForeignKey('compound.id'))
     target_id = Column(Integer, ForeignKey('target.id'))
     gene_id = Column(Integer, ForeignKey('gene.id'))
-    publication = Column(String(50)) # pubmed_id
+    publication_id = Column(Integer, ForeignKey('publication.id')) # pubmed_id
     native_id = Column(String(50)) # resource_uri last path param
-
-    authors = relationship('Author', secondary='bioActivity_author')
 
 
     def exists(self):
