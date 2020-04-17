@@ -115,6 +115,7 @@ In order to use application create a new directory in your machine and clone the
 ```
 cd to/your/project/path
 git clone https://github.com/karolosk/iai_data_engineering_assessment.git
+cd iai_data_engineering_assesement
 ```
 
 Optionally you can create a virual environment for the application.
